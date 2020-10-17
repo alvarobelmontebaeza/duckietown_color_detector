@@ -1,6 +1,4 @@
 # Python libraries that are used in the container
-cv2
 numpy
-time
-os
 matplotlib
+opencv-python3

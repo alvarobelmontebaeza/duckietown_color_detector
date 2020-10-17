@@ -6,7 +6,7 @@ COPY requirements.txt ./
 
 RUN pip3 install -r requirements.txt
 
-RUN export N_SPLITS = 2
+RUN export N_SPLITS=2
 
 COPY color_detector.py .
 

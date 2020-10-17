@@ -33,3 +33,6 @@ while(True):
 
     # Set 1 Hz frequency
     sleep(1)
+
+cap.release()
+cv2.destroyAllWindows()
