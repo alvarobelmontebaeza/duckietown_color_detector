@@ -22,7 +22,6 @@ while(True):
     for i in range(n_splits):
         first_row = int(i*split_size)
         last_row = int((i+1) * split_size)
-        colorHist = []
         
         segment = hsv_image[first_row:last_row, :,:]
 
@@ -39,10 +38,10 @@ while(True):
         upper_black = np.array([0,0,75])
 
         # Threshold the HSV image to get only black colors
-        mask_black = cv2.inRange(hsv_image, lower_black, upper_black)
+        mask_black = cv2.inRange(segment, lower_black, upper_black)
 
         # Bitwise-AND mask and original image
-        black = cv2.bitwise_and(hsv_image,hsv_image, mask= mask_black)
+        black = cv2.bitwise_and(segment,segment, mask= mask_black)
 
         ####### Apply Blue filtering #########
 
@@ -51,10 +50,10 @@ while(True):
         upper_blue = np.array([130,255,255])
 
         # Threshold the HSV image to get only blue colors
-        mask_blue = cv2.inRange(hsv_image, lower_blue, upper_blue)
+        mask_blue = cv2.inRange(segment, lower_blue, upper_blue)
 
         # Bitwise-AND mask and original image
-        blue = cv2.bitwise_and(hsv_image,hsv_image, mask= mask_blue)
+        blue = cv2.bitwise_and(segment,segment, mask= mask_blue)
         
         ########## Apply Yellow filtering ##########
 
@@ -63,10 +62,10 @@ while(True):
         upper_yellow = np.array([40,255,255])
 
         # Threshold the HSV image to get only yellow colors
-        mask_yellow = cv2.inRange(hsv_image, lower_yellow, upper_yellow)
+        mask_yellow = cv2.inRange(segment, lower_yellow, upper_yellow)
 
         # Bitwise-AND mask and original image
-        yellow = cv2.bitwise_and(hsv_image,hsv_image, mask= mask_yellow)
+        yellow = cv2.bitwise_and(segment,segment, mask= mask_yellow)
 
         # Apply White filtering
 
@@ -75,10 +74,10 @@ while(True):
         upper_white = np.array([0,0,255])
 
         # Threshold the HSV image to get only white colors
-        mask_white = cv2.inRange(hsv_image, lower_white, upper_white)
+        mask_white = cv2.inRange(segment, lower_white, upper_white)
 
         # Bitwise-AND mask and original image
-        white = cv2.bitwise_and(hsv_image,hsv_image, mask= mask_white)
+        white = cv2.bitwise_and(segment,segment, mask= mask_white)
 
         # Apply Red filtering.
 
@@ -86,18 +85,30 @@ while(True):
         lower_red = np.array([0,50,50])
         upper_red = np.array([10,255,255])
 
-        mask1 = cv2.inRange(hsv_image, lower_red, upper_red)
+        mask1 = cv2.inRange(segment, lower_red, upper_red)
 
         lower_red = np.array([170,50,50])
         upper_red = np.array([179,255,255])
 
-        mask2 = cv2.inRange(hsv_image, lower_red, upper_red)
+        mask2 = cv2.inRange(segment, lower_red, upper_red)
 
         # mix both masks to obtain full red range mask
         mask_red = mask1 or mask2
 
         # Bitwise-AND mask and original image
-        red = cv2.bitwise_and(hsv_image,hsv_image, mask= mask_red)
+        red = cv2.bitwise_and(segment,segment, mask= mask_red)
+
+        ######### Compute most present color in the segment #########
+        blue_px = np.sum(blue == 255)
+        black_px = np.sum(black == 255)
+        yellow_px = np.sum(yellow == 255)
+        white_px = np.sum(white == 255)
+        red_px = np.sum(red == 255)
+
+        
+        
+
+        
 
     # Set 1 Hz frequency
     sleep(1)
