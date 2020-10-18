@@ -22,21 +22,24 @@ while(True):
     for i in range(n_splits):
         first_row = int(i*split_size)
         last_row = int((i+1) * split_size)
+        colorHist = []
         
         segment = hsv_image[first_row:last_row, :]
 
         # Obtain color histogram. 
         # params: (image,channels,...,bins,range)
-        colorHist = cv2.calcHist([hsv_image],[0,1],None,[180,256],[0,180,0,256])
-    
-    # cv2.imshow('duckieVision',frame)
-    # plt.imshow(colorHist,interpolation = 'nearest')
-    # plt.show()
+        colorHist = cv2.calcHist([hsv_image],[0,1],None,[360,256],[0,360,0,256])
 
-    print(colorHist)
+        # obtain current most detected color
+        minVal, maxVal, minLoc, maxLoc = cv2.minMaxLoc(colorHist)
+
+        print("Image segment " + str(i) +":")
+        print("Most common color: " + str(maxLoc))
+        print("----------------------------------")
 
     # Set 1 Hz frequency
     sleep(1)
+
 
 cap.release()
 cv2.destroyAllWindows()
