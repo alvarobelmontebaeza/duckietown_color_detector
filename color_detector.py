@@ -21,11 +21,14 @@ while(True):
 
     # Obtain color distribution in each horizontal split.
     for i in range(n_splits):
-        segment = hsv_image[[i*split_size,(i+1)*split_size - 1],-1]
+        first_row = int(i*split_size)
+        last_row = int((i+1) * split_size))
+        
+        segment = hsv_image[first_row:last_row, :]
 
         # Obtain color histogram. 
         # params: (image,channels,...,bins,range)
-        colorHist[i,-1,-1] = cv2.calcHist([hsv_image],[0,1],None,[180,256],[0,180,0,256])
+        colorHist[i,:,:] = cv2.calcHist([hsv_image],[0,1],None,[180,256],[0,180,0,256])
     
     cv2.imshow(frame)
     plt.imshow(colorHist,interpolation = 'nearest')
