@@ -6,7 +6,7 @@ import os
 from matplotlib import pyplot as plt
 
 cap = cv2.VideoCapture(2)
-n_splits = os.environ['N_SPLITS']
+n_splits = int(os.environ['N_SPLITS'])
 
 while(True):
     # Capture frame-by-frame
