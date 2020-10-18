@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 
 cap = cv2.VideoCapture(2)
 n_splits = int(os.environ['N_SPLITS'])
+color_list = ['blue','black','yellow','white','red']
 
 while(True):
     # Capture frame-by-frame
@@ -17,6 +18,8 @@ while(True):
     hsv_image = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
     # h, s, v = cv2.split(hsv_image)
     split_size = len(hsv_image)/n_splits
+
+    print("=====================================")
 
     # Obtain color distribution in each horizontal split.
     for i in range(n_splits):
@@ -93,7 +96,7 @@ while(True):
         mask2 = cv2.inRange(segment, lower_red, upper_red)
 
         # mix both masks to obtain full red range mask
-        mask_red = mask1 or mask2
+        mask_red = mask1 + mask2 - mask1 * mask2
 
         # Bitwise-AND mask and original image
         red = cv2.bitwise_and(segment,segment, mask= mask_red)
@@ -105,11 +108,17 @@ while(True):
         white_px = np.sum(white == 255)
         red_px = np.sum(red == 255)
 
-        
-        
+        # Determine color name
+        color_px = np.array([blue_px,black_px,yellow_px,white_px,red_px])
+        maxColor = np.amax(color_px)
+        maxIndex = np.where(color_px == maxColor)
+        color = color_list[maxIndex[0][0]]
+
+        print('Image segment ' + str(i))
+        print('Most present color is ' + color)
+        print('------------------------------------')     
 
         
-
     # Set 1 Hz frequency
     sleep(1)
 
