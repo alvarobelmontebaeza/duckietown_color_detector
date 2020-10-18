@@ -1,4 +1,4 @@
 # Python libraries that are used in the container
 numpy
 matplotlib
-opencv-python3
+# it is used, but not included to avoid error opencv-python
