@@ -38,7 +38,7 @@ while(True):
 
         # define range of black color in HSV
         lower_black = np.array([0,0,0])
-        upper_black = np.array([0,0,75])
+        upper_black = np.array([180,255,40])
 
         # Threshold the HSV image to get only black colors
         mask_black = cv2.inRange(segment, lower_black, upper_black)
@@ -73,8 +73,8 @@ while(True):
         # Apply White filtering
 
         # define range of white color in HSV
-        lower_white = np.array([0,0,125])
-        upper_white = np.array([0,0,255])
+        lower_white = np.array([0,0,200])
+        upper_white = np.array([180,255,255])
 
         # Threshold the HSV image to get only white colors
         mask_white = cv2.inRange(segment, lower_white, upper_white)
